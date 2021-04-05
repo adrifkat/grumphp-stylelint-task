@@ -4,6 +4,10 @@
 
 [Stylelint](https://stylelint.io/) is a static analysis tool for styles. A mighty, modern linter that helps you avoid errors and enforce conventions in your styles.
 
+```shell
+composer require --dev adrifkat/grumphp-stylelint-task
+```
+
 ## npm
 
 1\. Use [npm](https://docs.npmjs.com/about-npm/) to install stylelint and its [`standard configuration`](https://github.com/stylelint/stylelint-config-standard):
@@ -18,12 +22,6 @@ npm install --save-dev stylelint stylelint-config-standard
 {
   "extends": "stylelint-config-standard"
 }
-```
-
-3\. Run stylelint on, for example, all the CSS files in your project:
-
-```shell
-npx stylelint "**/*.css"
 ```
 
 ## Config
@@ -41,9 +39,13 @@ grumphp:
             max-warnings: 5
             quiet: false
       
-parameters:
-    extensions:
-        - Adrifkat\GrumPHPStylelint\Extension
+services:
+  Adrifkat\GrumPHPStylelint\StylelintTask:
+    arguments:
+      - '@process_builder'
+      - '@formatter.raw_process'
+    tags:
+      - { name: grumphp.task, task: stylelint }
 
 ```
 
